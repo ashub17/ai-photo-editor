@@ -7,10 +7,10 @@ interface HistoryPanelProps {
 
 export default function HistoryPanel({ items, onSelect }: HistoryPanelProps) {
   return (
-    <section className="rounded-lg border border-white/10 bg-slate-900/70 p-5">
-      <h2 className="text-lg font-semibold text-white">Session history</h2>
+    <section className="rounded-lg border border-studio-muted/20 bg-studio-mid/15 p-5">
+      <h2 className="text-lg font-semibold text-studio-cream">Session history</h2>
       {items.length === 0 ? (
-        <p className="mt-4 text-sm leading-6 text-slate-400">
+        <p className="mt-4 text-sm leading-6 text-studio-muted">
           Your latest generated and edited images will be listed here.
         </p>
       ) : (
@@ -20,7 +20,7 @@ export default function HistoryPanel({ items, onSelect }: HistoryPanelProps) {
               key={item.id}
               type="button"
               onClick={() => onSelect(item)}
-              className="grid w-full grid-cols-[4.5rem_1fr] gap-3 rounded-lg border border-white/10 bg-slate-950/60 p-3 text-left transition hover:border-teal-300/60 hover:bg-slate-950"
+              className="grid w-full grid-cols-[4.5rem_1fr] gap-3 rounded-lg border border-studio-muted/20 bg-studio-dark/60 p-3 text-left transition hover:border-studio-peach/60 hover:bg-studio-dark"
             >
               <img
                 src={item.imageUrl}
@@ -29,17 +29,17 @@ export default function HistoryPanel({ items, onSelect }: HistoryPanelProps) {
               />
               <span className="min-w-0">
                 <span className="flex items-center gap-2">
-                  <span className="rounded bg-teal-300/10 px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-teal-200">
+                  <span className="rounded bg-studio-peach/10 px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-studio-peach">
                     {item.type === "generate" ? "Generated" : "Edited"}
                   </span>
-                  <span className="text-xs text-slate-500">
+                  <span className="text-xs text-studio-mid">
                     {new Date(item.timestamp).toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit"
                     })}
                   </span>
                 </span>
-                <span className="mt-2 line-clamp-2 block text-sm leading-5 text-slate-300">
+                <span className="mt-2 line-clamp-2 block text-sm leading-5 text-studio-cream/70">
                   {item.prompt}
                 </span>
               </span>

@@ -95,12 +95,12 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen text-slate-100">
+    <div className="min-h-screen text-studio-cream">
       <Header />
       <main className="mx-auto grid max-w-7xl gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_24rem] lg:px-8">
         <div className="space-y-6">
-          <section className="rounded-lg border border-white/10 bg-slate-900/70 p-5">
-            <div className="grid grid-cols-2 rounded-lg border border-white/10 bg-slate-950/70 p-1">
+          <section className="rounded-lg border border-studio-muted/20 bg-studio-mid/15 p-5">
+            <div className="grid grid-cols-2 rounded-lg border border-studio-muted/20 bg-studio-dark/70 p-1">
               {(["generate", "edit"] as Mode[]).map((tab) => (
                 <button
                   key={tab}
@@ -108,8 +108,8 @@ export default function App() {
                   onClick={() => setActiveTab(tab)}
                   className={`rounded-md px-3 py-2 text-sm font-semibold transition ${
                     activeTab === tab
-                      ? "bg-teal-300 text-slate-950"
-                      : "text-slate-300 hover:bg-white/10"
+                      ? "bg-studio-peach text-studio-dark"
+                      : "text-studio-cream/70 hover:bg-studio-cream/10"
                   }`}
                 >
                   {tab === "generate" ? "Generate Image" : "Edit Image"}
@@ -130,7 +130,7 @@ export default function App() {
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label className="block">
-                    <span className="text-sm font-medium text-slate-200">
+                    <span className="text-sm font-medium text-studio-cream">
                       Aspect ratio
                     </span>
                     <select
@@ -139,7 +139,7 @@ export default function App() {
                       onChange={(event) =>
                         setAspectRatio(event.target.value as AspectRatio)
                       }
-                      className="mt-2 w-full rounded-lg border border-white/10 bg-slate-950/70 px-3 py-3 text-sm text-white outline-none focus:border-teal-300 focus:ring-2 focus:ring-teal-300/20 disabled:cursor-not-allowed disabled:opacity-60"
+                      className="mt-2 w-full rounded-lg border border-studio-muted/20 bg-studio-dark/70 px-3 py-3 text-sm text-studio-cream outline-none focus:border-studio-peach focus:ring-2 focus:ring-studio-peach/20 disabled:cursor-not-allowed disabled:opacity-60"
                     >
                       {aspectRatios.map((ratio) => (
                         <option key={ratio} value={ratio}>
@@ -149,8 +149,8 @@ export default function App() {
                     </select>
                   </label>
 
-                  <label className="flex items-center justify-between gap-4 rounded-lg border border-white/10 bg-slate-950/70 px-4 py-3">
-                    <span className="text-sm font-medium text-slate-200">
+                  <label className="flex items-center justify-between gap-4 rounded-lg border border-studio-muted/20 bg-studio-dark/70 px-4 py-3">
+                    <span className="text-sm font-medium text-studio-cream">
                       Enhance prompt automatically
                     </span>
                     <input
@@ -158,7 +158,7 @@ export default function App() {
                       checked={enhanceGenerate}
                       disabled={loading}
                       onChange={(event) => setEnhanceGenerate(event.target.checked)}
-                      className="h-5 w-5 accent-teal-300 disabled:cursor-not-allowed"
+                      className="h-5 w-5 accent-studio-peach disabled:cursor-not-allowed"
                     />
                   </label>
                 </div>
@@ -166,7 +166,7 @@ export default function App() {
                 <button
                   type="submit"
                   disabled={!canGenerate}
-                  className="w-full rounded-lg bg-teal-300 px-4 py-3 text-sm font-bold text-slate-950 transition hover:bg-teal-200 disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-400"
+                  className="w-full rounded-lg bg-studio-peach px-4 py-3 text-sm font-bold text-studio-dark transition hover:bg-studio-cream disabled:cursor-not-allowed disabled:bg-studio-mid/40 disabled:text-studio-muted"
                 >
                   {loading ? "Generating..." : "Generate image"}
                 </button>
@@ -189,10 +189,10 @@ export default function App() {
                 />
 
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="block rounded-lg border border-white/10 bg-slate-950/70 px-4 py-3">
-                    <span className="flex items-center justify-between gap-4 text-sm font-medium text-slate-200">
+                  <label className="block rounded-lg border border-studio-muted/20 bg-studio-dark/70 px-4 py-3">
+                    <span className="flex items-center justify-between gap-4 text-sm font-medium text-studio-cream">
                       <span>Strength</span>
-                      <span className="text-teal-200">{strength.toFixed(1)}</span>
+                      <span className="text-studio-peach">{strength.toFixed(1)}</span>
                     </span>
                     <input
                       type="range"
@@ -202,12 +202,12 @@ export default function App() {
                       value={strength}
                       disabled={loading}
                       onChange={(event) => setStrength(Number(event.target.value))}
-                      className="mt-3 w-full accent-teal-300 disabled:cursor-not-allowed"
+                      className="mt-3 w-full accent-studio-peach disabled:cursor-not-allowed"
                     />
                   </label>
 
-                  <label className="flex items-center justify-between gap-4 rounded-lg border border-white/10 bg-slate-950/70 px-4 py-3">
-                    <span className="text-sm font-medium text-slate-200">
+                  <label className="flex items-center justify-between gap-4 rounded-lg border border-studio-muted/20 bg-studio-dark/70 px-4 py-3">
+                    <span className="text-sm font-medium text-studio-cream">
                       Enhance edit instruction automatically
                     </span>
                     <input
@@ -215,7 +215,7 @@ export default function App() {
                       checked={enhanceEdit}
                       disabled={loading}
                       onChange={(event) => setEnhanceEdit(event.target.checked)}
-                      className="h-5 w-5 accent-teal-300 disabled:cursor-not-allowed"
+                      className="h-5 w-5 accent-studio-peach disabled:cursor-not-allowed"
                     />
                   </label>
                 </div>
@@ -223,7 +223,7 @@ export default function App() {
                 <button
                   type="submit"
                   disabled={!canEdit}
-                  className="w-full rounded-lg bg-teal-300 px-4 py-3 text-sm font-bold text-slate-950 transition hover:bg-teal-200 disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-400"
+                  className="w-full rounded-lg bg-studio-peach px-4 py-3 text-sm font-bold text-studio-dark transition hover:bg-studio-cream disabled:cursor-not-allowed disabled:bg-studio-mid/40 disabled:text-studio-muted"
                 >
                   {loading ? "Editing..." : "Edit image"}
                 </button>

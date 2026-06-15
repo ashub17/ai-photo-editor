@@ -7,7 +7,7 @@
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
-  background: #071018;
+  background: #334155;
 }
 
 body {
@@ -15,9 +15,9 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgba(20, 184, 166, 0.16), transparent 30rem),
-    radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.1), transparent 34rem),
-    #071018;
+    radial-gradient(circle at top left, rgba(243, 225, 200, 0.07), transparent 30rem),
+    radial-gradient(circle at bottom right, rgba(241, 239, 228, 0.04), transparent 34rem),
+    #334155;
 }
 
 button,
@@ -25,4 +25,9 @@ input,
 select,
 textarea {
   font: inherit;
+}
+
+select option {
+  background-color: #334155;
+  color: #f1efe4;
 }

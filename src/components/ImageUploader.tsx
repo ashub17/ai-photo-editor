@@ -51,8 +51,8 @@ export default function ImageUploader({
 
   return (
     <div>
-      <span className="text-sm font-medium text-slate-200">Source image</span>
-      <div className="mt-2 rounded-lg border border-dashed border-white/15 bg-slate-950/60 p-4">
+      <span className="text-sm font-medium text-studio-cream">Source image</span>
+      <div className="mt-2 rounded-lg border border-dashed border-studio-muted/25 bg-studio-dark/60 p-4">
         {imageDataUrl ? (
           <div className="space-y-4">
             <img
@@ -65,7 +65,7 @@ export default function ImageUploader({
                 type="button"
                 disabled={disabled}
                 onClick={() => inputRef.current?.click()}
-                className="rounded-md border border-white/10 px-3 py-2 text-sm font-medium text-slate-200 transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+                className="rounded-md border border-studio-muted/20 px-3 py-2 text-sm font-medium text-studio-cream transition hover:bg-studio-cream/10 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 Replace image
               </button>
@@ -84,12 +84,12 @@ export default function ImageUploader({
             type="button"
             disabled={disabled}
             onClick={() => inputRef.current?.click()}
-            className="flex min-h-44 w-full flex-col items-center justify-center rounded-md border border-white/10 bg-slate-900/70 px-4 py-8 text-center transition hover:bg-slate-900 disabled:cursor-not-allowed disabled:opacity-60"
+            className="flex min-h-44 w-full flex-col items-center justify-center rounded-md border border-studio-muted/20 bg-studio-mid/15 px-4 py-8 text-center transition hover:bg-studio-mid/25 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            <span className="text-base font-medium text-white">
+            <span className="text-base font-medium text-studio-cream">
               Upload an image
             </span>
-            <span className="mt-2 text-sm text-slate-400">
+            <span className="mt-2 text-sm text-studio-muted">
               PNG, JPEG, or WebP up to 10MB
             </span>
           </button>
