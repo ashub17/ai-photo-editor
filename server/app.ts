@@ -3,7 +3,7 @@ import {
   editImage,
   enhancePrompt,
   generateImage
-} from "./openrouter";
+} from "./openrouter.js";
 import {
   HttpError,
   requireAspectRatio,
@@ -11,7 +11,7 @@ import {
   requireImageDataUrl,
   requireStrength,
   requireString
-} from "./utils";
+} from "./utils.js";
 
 const app = express();
 app.use(express.json({ limit: "14mb" }));

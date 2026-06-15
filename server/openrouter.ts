@@ -1,4 +1,4 @@
-import { HttpError, safeJsonParseObject } from "./utils";
+import { HttpError, safeJsonParseObject } from "./utils.js";
 
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 const PROMPT_ENHANCEMENT_MAX_TOKENS = 700;
@@ -45,7 +45,9 @@ async function postOpenRouter(body: JsonObject) {
     headers: {
       Authorization: `Bearer ${getApiKey()}`,
       "Content-Type": "application/json",
-      "HTTP-Referer": "http://localhost:5173",
+      "HTTP-Referer": process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "http://localhost:5173",
       "X-Title": "Image Studio"
     },
     body: JSON.stringify(body)
