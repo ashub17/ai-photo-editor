@@ -17,15 +17,17 @@ export default function PromptBox({
 }: PromptBoxProps) {
   return (
     <label htmlFor={id} className="block">
-      <span className="text-sm font-medium text-studio-cream">{label}</span>
+      <span className="mb-2 block text-xs font-semibold uppercase tracking-widest text-app-secondary">
+        {label}
+      </span>
       <textarea
         id={id}
         value={value}
         disabled={disabled}
         placeholder={placeholder}
         onChange={(event) => onChange(event.target.value)}
-        rows={7}
-        className="mt-2 w-full resize-y rounded-lg border border-studio-muted/20 bg-studio-dark/70 px-4 py-3 text-sm leading-6 text-studio-cream outline-none transition placeholder:text-studio-mid focus:border-studio-peach focus:ring-2 focus:ring-studio-peach/20 disabled:cursor-not-allowed disabled:opacity-60"
+        rows={6}
+        className="w-full resize-none rounded-lg border border-app-border bg-app-input px-4 py-3 text-sm leading-relaxed text-app-text outline-none transition-colors duration-150 placeholder:text-app-muted focus:border-app-accent focus:ring-2 focus:ring-app-accent/15 disabled:cursor-not-allowed disabled:opacity-50"
       />
     </label>
   );

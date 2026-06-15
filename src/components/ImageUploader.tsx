@@ -27,18 +27,14 @@ export default function ImageUploader({
 
   async function handleFile(file?: File) {
     setError("");
-
-    if (!file) {
-      return;
-    }
+    if (!file) return;
 
     if (!file.type.startsWith("image/")) {
       setError("Choose an image file.");
       return;
     }
-
     if (file.size > MAX_IMAGE_BYTES) {
-      setError("Image must be 10MB or smaller.");
+      setError("Image must be 10 MB or smaller.");
       return;
     }
 
@@ -51,29 +47,32 @@ export default function ImageUploader({
 
   return (
     <div>
-      <span className="text-sm font-medium text-studio-cream">Source image</span>
-      <div className="mt-2 rounded-lg border border-dashed border-studio-muted/25 bg-studio-dark/60 p-4">
+      <span className="mb-2 block text-xs font-semibold uppercase tracking-widest text-app-secondary">
+        Source image
+      </span>
+
+      <div className="rounded-lg border border-dashed border-app-border bg-app-input p-3">
         {imageDataUrl ? (
-          <div className="space-y-4">
+          <div className="space-y-3 animate-fade-in">
             <img
               src={imageDataUrl}
               alt="Uploaded preview"
-              className="max-h-72 w-full rounded-md object-contain"
+              className="max-h-64 w-full rounded-md object-contain"
             />
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2">
               <button
                 type="button"
                 disabled={disabled}
                 onClick={() => inputRef.current?.click()}
-                className="rounded-md border border-studio-muted/20 px-3 py-2 text-sm font-medium text-studio-cream transition hover:bg-studio-cream/10 disabled:cursor-not-allowed disabled:opacity-60"
+                className="rounded-md border border-app-border px-3 py-1.5 text-xs font-medium text-app-secondary transition-colors duration-150 hover:border-app-line hover:text-app-text disabled:cursor-not-allowed disabled:opacity-50"
               >
-                Replace image
+                Replace
               </button>
               <button
                 type="button"
                 disabled={disabled}
                 onClick={() => onImageChange("")}
-                className="rounded-md border border-rose-300/20 px-3 py-2 text-sm font-medium text-rose-200 transition hover:bg-rose-400/10 disabled:cursor-not-allowed disabled:opacity-60"
+                className="rounded-md border border-rose-900/50 px-3 py-1.5 text-xs font-medium text-rose-400 transition-colors duration-150 hover:border-rose-700/50 hover:bg-rose-900/20 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Remove
               </button>
@@ -84,14 +83,25 @@ export default function ImageUploader({
             type="button"
             disabled={disabled}
             onClick={() => inputRef.current?.click()}
-            className="flex min-h-44 w-full flex-col items-center justify-center rounded-md border border-studio-muted/20 bg-studio-mid/15 px-4 py-8 text-center transition hover:bg-studio-mid/25 disabled:cursor-not-allowed disabled:opacity-60"
+            className="flex min-h-40 w-full flex-col items-center justify-center gap-3 rounded-md border border-app-border bg-app-elevated px-4 py-8 text-center transition-colors duration-150 hover:border-app-accent/40 hover:bg-app-elevated disabled:cursor-not-allowed disabled:opacity-50"
           >
-            <span className="text-base font-medium text-studio-cream">
-              Upload an image
-            </span>
-            <span className="mt-2 text-sm text-studio-muted">
-              PNG, JPEG, or WebP up to 10MB
-            </span>
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-app-surface ring-1 ring-app-border">
+              <svg
+                className="h-5 w-5 text-app-secondary"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-app-text">Upload an image</p>
+              <p className="mt-0.5 text-xs text-app-muted">PNG, JPEG, or WebP · up to 10 MB</p>
+            </div>
           </button>
         )}
         <input
@@ -103,7 +113,13 @@ export default function ImageUploader({
           onChange={(event) => handleFile(event.target.files?.[0])}
         />
       </div>
-      {error ? <p className="mt-2 text-sm text-rose-300">{error}</p> : null}
+
+      {error ? (
+        <p className="mt-2 flex items-center gap-1.5 text-xs text-rose-400">
+          <span className="h-1 w-1 rounded-full bg-rose-400" />
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }
