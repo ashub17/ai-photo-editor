@@ -14,7 +14,7 @@ export default function ResultPanel({ result, loading, error }: ResultPanelProps
         {result?.imageUrl ? (
           <a
             href={result.imageUrl}
-            download="openrouter-image-studio-result.png"
+            download="image-studio-result.png"
             className="rounded-md bg-teal-300 px-3 py-2 text-sm font-semibold text-slate-950 transition hover:bg-teal-200"
           >
             Download
@@ -28,7 +28,7 @@ export default function ResultPanel({ result, loading, error }: ResultPanelProps
             <div>
               <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-teal-300 border-t-transparent" />
               <p className="mt-4 text-sm font-medium text-slate-200">
-                Rendering image with your OpenRouter model...
+                Rendering image...
               </p>
             </div>
           </div>

@@ -151,7 +151,7 @@ export default function App() {
 
                   <label className="flex items-center justify-between gap-4 rounded-lg border border-white/10 bg-slate-950/70 px-4 py-3">
                     <span className="text-sm font-medium text-slate-200">
-                      Enhance prompt with openrouter/auto
+                      Enhance prompt automatically
                     </span>
                     <input
                       type="checkbox"
@@ -208,7 +208,7 @@ export default function App() {
 
                   <label className="flex items-center justify-between gap-4 rounded-lg border border-white/10 bg-slate-950/70 px-4 py-3">
                     <span className="text-sm font-medium text-slate-200">
-                      Enhance edit instruction with openrouter/auto
+                      Enhance edit instruction automatically
                     </span>
                     <input
                       type="checkbox"

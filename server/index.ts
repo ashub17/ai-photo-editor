@@ -105,5 +105,5 @@ app.use(
 );
 
 app.listen(port, () => {
-  console.log(`OpenRouter Image Studio API listening on http://localhost:${port}`);
+  console.log(`Image Studio API listening on http://localhost:${port}`);
 });

@@ -56,7 +56,7 @@ export function requireStrength(value: unknown): number {
     throw new HttpError(400, "strength must be between 0.1 and 1.0.");
   }
 
-  return Number(value.toFixed(1));
+  return Math.round(value * 10) / 10;
 }
 
 export function requireImageDataUrl(value: unknown): string {

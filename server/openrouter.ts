@@ -13,10 +13,20 @@ export interface EnhancedPrompt {
 
 type JsonObject = Record<string, unknown>;
 
+function asArray(value: unknown): unknown[] {
+  return Array.isArray(value) ? value : [];
+}
+
+function asObject(value: unknown): JsonObject | null {
+  return value !== null && typeof value === "object" && !Array.isArray(value)
+    ? (value as JsonObject)
+    : null;
+}
+
 function getApiKey() {
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
-    throw new HttpError(500, "OpenRouter API key is not configured.");
+    throw new HttpError(500, "API key is not configured.");
   }
 
   return apiKey;
@@ -36,7 +46,7 @@ async function postOpenRouter(body: JsonObject) {
       Authorization: `Bearer ${getApiKey()}`,
       "Content-Type": "application/json",
       "HTTP-Referer": "http://localhost:5173",
-      "X-Title": "OpenRouter Image Studio"
+      "X-Title": "Image Studio"
     },
     body: JSON.stringify(body)
   });
@@ -51,13 +61,13 @@ async function postOpenRouter(body: JsonObject) {
   }
 
   if (!response.ok) {
-    console.error("OpenRouter request failed", {
+    console.error("API request failed", {
       status: response.status,
       payload
     });
     throw new HttpError(
       response.status >= 500 ? 502 : response.status,
-      "OpenRouter request failed. Check your model and API key configuration."
+      "Image API request failed. Check your model and API key configuration."
     );
   }
 
@@ -65,8 +75,8 @@ async function postOpenRouter(body: JsonObject) {
 }
 
 function getAssistantText(raw: JsonObject): string {
-  const message = (raw.choices as any[])?.[0]?.message;
-  const content = message?.content;
+  const message = asObject(asArray(raw.choices)[0])?.message;
+  const content = asObject(message)?.content;
 
   if (typeof content === "string") {
     return content;
@@ -75,13 +85,9 @@ function getAssistantText(raw: JsonObject): string {
   if (Array.isArray(content)) {
     return content
       .map((item) => {
-        if (typeof item === "string") {
-          return item;
-        }
-        if (typeof item?.text === "string") {
-          return item.text;
-        }
-        return "";
+        if (typeof item === "string") return item;
+        const obj = asObject(item);
+        return typeof obj?.text === "string" ? obj.text : "";
       })
       .join("\n")
       .trim();
@@ -171,53 +177,44 @@ function asImageUrl(value: unknown): string | null {
 }
 
 export function extractImageFromOpenRouterResponse(raw: JsonObject): string {
-  const firstChoice = (raw.choices as any[])?.[0];
-  const message = firstChoice?.message;
+  const message = asObject(asObject(asArray(raw.choices)[0])?.message);
 
-  const messageImage =
-    message?.images?.[0]?.image_url?.url ??
-    message?.images?.[0]?.url ??
-    message?.images?.[0]?.b64_json;
-  const messageImageUrl = asImageUrl(messageImage);
-  if (messageImageUrl) {
-    return messageImageUrl;
-  }
+  const firstMessageImage = asObject(asArray(asObject(message?.images)?.[0] ?? message?.images)?.[0]);
+  const messageImageUrl = asImageUrl(
+    firstMessageImage?.image_url
+      ? asObject(firstMessageImage.image_url)?.url
+      : (firstMessageImage?.url ?? firstMessageImage?.b64_json)
+  );
+  if (messageImageUrl) return messageImageUrl;
 
   const content = message?.content;
   if (Array.isArray(content)) {
     for (const item of content) {
+      const obj = asObject(item);
+      if (!obj) continue;
       const directUrl =
-        item?.image_url?.url ??
-        item?.image_url ??
-        item?.url ??
-        item?.source?.url ??
-        item?.b64_json;
+        asObject(obj.image_url)?.url ??
+        obj.image_url ??
+        obj.url ??
+        asObject(obj.source)?.url ??
+        obj.b64_json;
       const imageUrl = asImageUrl(directUrl);
-      if (imageUrl) {
-        return imageUrl;
-      }
-
-      const textUrl = asImageUrl(item?.text);
-      if (textUrl) {
-        return textUrl;
-      }
+      if (imageUrl) return imageUrl;
+      const textUrl = asImageUrl(obj.text);
+      if (textUrl) return textUrl;
     }
   }
 
-  const rawImage = (raw.images as any[])?.[0]?.url ?? (raw.images as any[])?.[0]?.b64_json;
-  const rawImageUrl = asImageUrl(rawImage);
-  if (rawImageUrl) {
-    return rawImageUrl;
-  }
+  const firstRawImage = asObject(asArray(raw.images)[0]);
+  const rawImageUrl = asImageUrl(firstRawImage?.url ?? firstRawImage?.b64_json);
+  if (rawImageUrl) return rawImageUrl;
 
-  const dataImage = (raw.data as any[])?.[0]?.url ?? (raw.data as any[])?.[0]?.b64_json;
-  const dataImageUrl = asImageUrl(dataImage);
-  if (dataImageUrl) {
-    return dataImageUrl;
-  }
+  const firstDataItem = asObject(asArray(raw.data)[0]);
+  const dataImageUrl = asImageUrl(firstDataItem?.url ?? firstDataItem?.b64_json);
+  if (dataImageUrl) return dataImageUrl;
 
-  console.error("No image found in OpenRouter response", raw);
-  throw new HttpError(502, "OpenRouter returned no image. Check the configured image model.");
+  console.error("No image found in API response", raw);
+  throw new HttpError(502, "The API returned no image. Check the configured image model.");
 }
 
 export async function generateImage({
